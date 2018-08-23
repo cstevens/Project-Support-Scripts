@@ -27,9 +27,9 @@ if [[ ! -v OCFPATH ]]; then
   echo "export OCFPATH=~/$OCF_VERSION" >> ~/.bashrc
 
   export PATH=~/$OCF_VERSION:$PATH
-elif [ "$OCFPATH" -eq "iot" ] then
+elif [ "$OCFPATH" == 'iot' ] then
   sed -i.bak "s|"iot"|${OCF_VERSION}|g" ~/.bashrc
-elif [ "$OCFPATH" -eq "iot-lite" ] then
+else
   sed -i.bak "s|"iot-lite"|${OCF_VERSION}|g" ~/.bashrc
 fi
 
