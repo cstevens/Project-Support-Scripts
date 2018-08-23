@@ -20,19 +20,19 @@ set -x #echo on
 
 CURPWD=`pwd`
 
-if [[ ! -v OCFPATH ]]; then
-    export OCFPATH=~/iot-lite
-    echo "export OCFPATH=~/iot-lite" >> ~/.bashrc
+OCF_VERSION=$1
 
-    export PATH=~/iot-lite:$PATH
+if [[ ! -v OCFPATH ]]; then
+  export OCFPATH=~/$OCF_VERSION
+  echo "export OCFPATH=~/$OCF_VERSION" >> ~/.bashrc
+
+  export PATH=~/$OCF_VERSION:$PATH
+else if [ "$OCFPATH" -eq "iot" ] then
+  sed -i.bak "s|"iot"|${OCF_VERSION}|g" ~/.bashrc
+else if [ "$OCFPATH" -eq "iot-lite" ] then
+  sed -i.bak "s|"iot-lite"|${OCF_VERSION}|g" ~/.bashrc
 fi
 
-git clone https://github.com/openconnectivity/Project-Support-Scripts.git
-
-MY_COMMAND="cp ./Project-Support-Scripts/IoTivity/*.sh ${OCFPATH}/../iot/"
-eval ${MY_COMMAND}
-
-MY_COMMAND="cp ./Project-Support-Scripts/IoTivity-lite/*.sh ${OCFPATH}/../iot-lite/"
-eval ${MY_COMMAND}
+export OCFPATH=~/$OCF_VERSION
 
 cd $CURPWD
